@@ -23,7 +23,7 @@ def dehaze_patchMap(image, omega, patchMap):
     patchMap(find(patchMap>120))=120'''
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)/255
-    print(type(gray), gray.shape, type(patchMap), patchMap)
+    # print(type(gray), gray.shape, type(patchMap), patchMap)
     patchMap = guidedFilter(gray, patchMap, 15, 0.001).astype(np.uint8)
     patchMap[patchMap<1]=1
     patchMap[patchMap>120]=120
@@ -56,7 +56,7 @@ def dehaze_patchMap(image, omega, patchMap):
     
     image = image / 255
     for i in range(len(patch_size)):
-        print(str(i), end= ' ')
+        # print(str(i), end= ' ')
         dark_channel = find_darkchannel(image, patch_size[i])
 
         atmosphere = find_atmosphericLight(image, dark_channel)
@@ -95,7 +95,7 @@ def dehaze_patchMap(image, omega, patchMap):
         tx[tx < 0.1] = 0.1
         tx = np.concatenate((tx,tx,tx), axis=2)
         recover_result = (image - A_predict) / tx + A_predict
-        #plt.imshow(recover_result); plt.show()
+        # plt.imshow(recover_result); plt.show()
 
     return recover_result * 255, tx
     
